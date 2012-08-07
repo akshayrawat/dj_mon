@@ -24,48 +24,31 @@ module DjMon
     end
 
     class << self
-
-      def all
-        Delayed::Job.all
-      end
-
-      def failed
-        Delayed::Job.where('delayed_jobs.failed_at IS NOT NULL')
-      end
-
-      def active
-        Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NOT NULL')
-      end
-
-      def queued
-        Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NULL')
-      end
-
       def reports_for jobs
         jobs.collect { |job| DjReport.new(job) }
       end
 
       def all_reports
-        reports_for all
+        reports_for DjMon::Backend.all
       end
 
       def failed_reports
-        reports_for failed
+        reports_for DjMon::Backend.failed
       end
 
       def active_reports
-        reports_for active
+        reports_for DjMon::Backend.active
       end
 
       def queued_reports
-        reports_for queued
+        reports_for DjMon::Backend.queued
       end
 
       def dj_counts
         {
-          failed: failed.size,
-          active: active.size,
-          queued: queued.size
+          failed: DjMon::Backend.failed.size,
+          active: DjMon::Backend.active.size,
+          queued: DjMon::Backend.queued.size
         }
       end
 

@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Note
 
-Supports only `activerecord` for now.
+Supports only `activerecord` and `mongoid` for now.
 
 ## Usage
 

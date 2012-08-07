@@ -34,14 +34,12 @@ module DjMon
     end
     
     def retry
-      dj = Delayed::Job.find(params[:id])
-      dj.update_attribute :failed_at, nil if dj
+      DjMon::Backend.retry params[:id]
       redirect_to root_url, notice: "The job has been queued for a re-run" and return
     end
   
     def destroy
-      dj = Delayed::Job.find(params[:id])
-      dj.destroy if dj
+      DjMon::Backend.destroy params[:id]
       redirect_to root_url, notice: "The job was deleted" and return
     end
   
