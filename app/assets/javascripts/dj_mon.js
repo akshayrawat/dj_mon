@@ -39,7 +39,7 @@ $(function(){
   });
 
   (function refreshCount() {
-    $.getJSON('/dj_mon/dj_reports/dj_counts/').success(function(data){
+    $.getJSON(dj_counts_dj_reports_url).success(function(data){
       var template = $('#dj_counts_template').html();
       var output = Mustache.render(template, data);
       $('#dj-counts-view').html(output);

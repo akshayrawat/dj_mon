@@ -58,10 +58,10 @@
           {{#failed}}
           {{failed_at}}
           
-          = form_tag '/dj_mon/dj_reports/{{id}}/retry', method: :post, class: 'form-inline' do
+          = form_tag CGI.unescape(retry_dj_report_url(:id => "{{id}}")), method: :post, class: 'form-inline' do
             = submit_tag 'Retry', class: 'btn btn-info btn-mini'
 
-          = form_tag '/dj_mon/dj_reports/{{id}}', method: :delete, class: 'form-inline' do
+          = form_tag CGI.unescape(dj_report_url(:id => "{{id}}")), method: :delete, class: 'form-inline' do
             = submit_tag 'Delete', class: 'btn btn-danger btn-mini'
 
           {{/failed}}
