@@ -46,6 +46,7 @@ module DjMon
 
       def dj_counts
         {
+          all: DjMon::Backend.all.size,
           failed: DjMon::Backend.failed.size,
           active: DjMon::Backend.active.size,
           queued: DjMon::Backend.queued.size
