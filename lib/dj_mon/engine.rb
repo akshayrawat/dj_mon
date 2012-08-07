@@ -6,6 +6,7 @@ module DjMon
     config.dj_mon = ActiveSupport::OrderedOptions.new
     config.dj_mon.username = "dj_mon"
     config.dj_mon.password = "password"
+    config.dj_mon.use_authenticate = true
 
     if Rails.version > "3.1"
       initializer "DJMon precompile hook" do |app|
