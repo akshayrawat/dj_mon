@@ -1,4 +1,4 @@
-# DJ Mon [![Build Status](https://secure.travis-ci.org/akshayrawat/dj_mon.png)](http://travis-ci.org/akshayrawat/dj_mon)
+# DJ Mon [![Build Status](https://secure.travis-ci.org/akshayrawat/dj_mon.png?branch=master)](http://travis-ci.org/akshayrawat/dj_mon)
 
 A Rails engine based frontend for Delayed Job.
 
