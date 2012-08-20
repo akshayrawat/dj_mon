@@ -34,4 +34,7 @@ Dummy::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.dj_mon.username = "dj_mon"
+  config.dj_mon.password = "password"
 end
