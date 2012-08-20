@@ -52,25 +52,21 @@ module DjMon
       end
 
       def dj_counts
-        {
-          all: DjMon::Backend.all.size,
-          failed: DjMon::Backend.failed.size,
-          active: DjMon::Backend.active.size,
-          queued: DjMon::Backend.queued.size
-        }
+        [:all, :failed, :active, :queued].each_with_object({}) do |key, stack|
+          stack[key] = DjMon::Backend.send(key).size
+        end
       end
 
       def settings
-        {
-          destroy_failed_jobs: Delayed::Worker.destroy_failed_jobs,
-          sleep_delay:         Delayed::Worker.sleep_delay,
-          max_attempts:        Delayed::Worker.max_attempts,
-          max_run_time:        Delayed::Worker.max_run_time,
-          read_ahead:          Delayed::Worker.read_ahead,
-          delay_jobs:          Delayed::Worker.delay_jobs,
+        [
+          :destroy_failed_jobs, :sleep_delay, :max_attempts,
+          :max_run_time, :read_ahead, :delay_jobs
+        ].each_with_object({}) do |key, stack|
+          stack[key] = Delayed::Worker.send key
+        end.merge!({
           delayed_job_version: Gem.loaded_specs["delayed_job"].version.version,
           dj_mon_version:      DjMon::VERSION
-        }
+        })
       end
     end
 
