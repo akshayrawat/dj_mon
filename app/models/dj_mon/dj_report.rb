@@ -32,7 +32,7 @@ module DjMon
 
     class << self
       def reports_for jobs
-        jobs.collect { |job| DjReport.new(job) }
+        jobs.collect { |job| new(job) }
       end
 
       def all_reports
