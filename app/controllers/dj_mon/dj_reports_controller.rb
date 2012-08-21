@@ -1,5 +1,3 @@
-require 'dj_mon/version'
-
 module DjMon
   class DjReportsController < ActionController::Base
     respond_to :json, :html
