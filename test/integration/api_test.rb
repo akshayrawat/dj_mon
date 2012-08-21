@@ -207,27 +207,31 @@ class ApiTest < ActionDispatch::IntegrationTest
   end
 
   def authorized_get(url, params)
-    get url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'password') }
+    get url, params, authorization_header('dj_mon', 'password')
   end
 
   def unauthorized_get(url, params)
-    get url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'gibber') }
+    get url, params, authorization_header('dj_mon', 'gibber')
   end
 
   def authorized_post(url, params)
-    post url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'password') }
+    post url, params, authorization_header('dj_mon', 'password')
   end
 
   def unauthorized_post(url, params)
-    post url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'gibber') }
+    post url, params, authorization_header('dj_mon', 'gibber')
   end
 
   def authorized_delete(url, params)
-    delete url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'password') }
+    delete url, params, authorization_header('dj_mon', 'password')
   end
 
   def unauthorized_delete(url, params)
-    delete url, params, { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials('dj_mon', 'gibber') }
+    delete url, params, authorization_header('dj_mon', 'gibber')
+  end
+
+  def authorization_header user, password
+    { 'HTTP_AUTHORIZATION'=> ActionController::HttpAuthentication::Basic.encode_credentials(user, password) }
   end
 
 end
