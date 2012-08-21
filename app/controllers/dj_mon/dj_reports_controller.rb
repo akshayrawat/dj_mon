@@ -6,9 +6,6 @@ module DjMon
     before_filter :authenticate
     before_filter :set_api_version
 
-    def index
-    end
-
     def all
       respond_with DjReport.all_reports
     end
