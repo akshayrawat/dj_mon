@@ -6,7 +6,7 @@ module DjMon
     layout 'dj_mon'
 
     before_filter :authenticate
-    after_filter :set_api_version
+    before_filter :set_api_version
 
     def index
     end
