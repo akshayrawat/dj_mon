@@ -30,10 +30,9 @@ namespace :test do
 
   desc "Prepare environment for tests"
   task :prepare do
-    FileUtils.cd File.expand_path("../test/dummy_active_record", __FILE__)
-    system("rake db:create:all")
-    system("rake db:migrate")
-    system("rake db:test:clone")
+    Dir.chdir File.expand_path("../test/dummy_active_record", __FILE__) do
+      system("rake db:create:all db:migrate db:test:clone")
+    end
   end
 
 end
