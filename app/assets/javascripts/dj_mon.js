@@ -1,8 +1,8 @@
-//= require dj_mon/bootstrap_tooltip
-//= require dj_mon/bootstrap_tab
-//= require dj_mon/bootstrap_popover
-//= require dj_mon/bootstrap_modal
-//= require dj_mon/mustache
+//= require bootstrap_tooltip
+//= require bootstrap_tab
+//= require bootstrap_popover
+//= require bootstrap_modal
+//= require mustache
 
 $(function(){
 
