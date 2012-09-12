@@ -3,7 +3,7 @@ module DjMon
     module ActiveRecord
       class << self
         def all
-          Delayed::Job.scoped
+          Delayed::Job.last(500)
         end
 
         def failed
