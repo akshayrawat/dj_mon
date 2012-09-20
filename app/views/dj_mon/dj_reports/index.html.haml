@@ -48,13 +48,15 @@
           .label.label-info
             {{queue}}
         %td
-          <a href="#modal_template" data-content="{{payload}}" data-title="Payload" rel='modal' title='Payload'> {{id}} </a>
+          %a{:href => "#modal_template", :"data-content" => "{{payload}}", :"data-title" => "Payload", :rel => "modal", :title => "Payload"}
+            {{id}}
         %td
           {{priority}}
         %td
           {{attempts}}
         %td
-          <a href="#modal_template" data-content="{{last_error}}" data-title="Last Error" rel='modal' title='Last Error'> {{last_error_summary}} </a>
+          %a{:href => "#modal_template", :"data-content" => "{{last_error}}", :"data-title" => "Last Error", :rel => "modal", :title => "Last Error"}
+            {{last_error_summary}}
         %td.date
           {{run_at}}
         %td.date
