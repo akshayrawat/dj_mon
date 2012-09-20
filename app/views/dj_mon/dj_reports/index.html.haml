@@ -75,15 +75,6 @@
 
       {{/.}}
 
-%script#modal_template{ :type=> "text/x-handlebars-template" }
-  .modal.hide
-    .modal-header
-      %button{ :type => "button", :class => "close", 'data-dismiss' => "modal" }
-        ×
-      %h3
-        {{title}}
-    .modal-body
-      %code
-        {{content}}
-    .modal-footer
-      = link_to "Close", '#', :class => 'btn btn-primary', 'data-dismiss'=> 'modal'
+= modal_dialog_template "modal", "{{title}}" do
+  %code
+    {{content}}
