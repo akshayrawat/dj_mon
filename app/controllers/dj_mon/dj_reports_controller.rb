@@ -1,5 +1,6 @@
 module DjMon
   class DjReportsController < ActionController::Base
+    helper DjMonHelper
     respond_to :json, :html
     layout 'dj_mon'
 
