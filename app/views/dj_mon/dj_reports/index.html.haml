@@ -54,7 +54,7 @@
         %td
           {{attempts}}
         %td
-          <a href="#last_error_template" data-content="{{last_error}}" rel='modal' title='Last Error'> {{last_error_summary}} </a>
+          <a href="#modal_template" data-content="{{last_error}}" data-title="Last Error" rel='modal' title='Last Error'> {{last_error_summary}} </a>
         %td.date
           {{run_at}}
         %td.date
@@ -73,13 +73,13 @@
 
       {{/.}}
 
-%script#last_error_template{ :type=> "text/x-handlebars-template" }
+%script#modal_template{ :type=> "text/x-handlebars-template" }
   .modal.hide
     .modal-header
       %button{ :type => "button", :class => "close", 'data-dismiss' => "modal" }
         ×
       %h3
-        Last Error
+        {{title}}
     .modal-body
       %code
         {{content}}
