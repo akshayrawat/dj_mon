@@ -40,6 +40,8 @@
           Created at
         %th.date
           Failed at
+        %th.actions
+          Actions
 
     %tbody
       {{#.}}
@@ -60,9 +62,10 @@
         %td.date
           {{created_at}}
         %td.date
-          {{#failed}}
           {{failed_at}}
-          
+        %td.actions
+          {{#failed}}
+
           = form_tag CGI.unescape(retry_dj_report_url(:id => "{{id}}")), :method => :post, :class => 'form-inline' do
             = submit_tag 'Retry', :class => 'btn btn-info btn-mini'
 
