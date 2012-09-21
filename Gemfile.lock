@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dj_mon (1.0.1)
+    dj_mon (1.0.3)
       haml (~> 3.1)
       rails (~> 3.1)
 
