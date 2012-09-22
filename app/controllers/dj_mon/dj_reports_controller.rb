@@ -1,11 +1,10 @@
 module DjMon
   class DjReportsController < ActionController::Base
     respond_to :json, :html
-    layout 'dj_mon', :except => :access_denied
+    layout 'dj_mon'
 
     before_filter :authenticate
     before_filter :set_api_version
-    before_filter :restrict_requests
 
     def index
     end
@@ -34,11 +33,8 @@ module DjMon
       respond_with DjReport.settings
     end
 
-    def access_denied
-    end
-
-    def reply
-      DjMon::Backend.reply params[:id]
+    def retry
+      DjMon::Backend.retry params[:id]
       respond_to do |format|
         format.html { redirect_to root_url, notice: "The job has been queued for a re-run" }
         format.json { head(:ok) }
@@ -56,6 +52,10 @@ module DjMon
     protected
 
     def authenticate
+      if invalid_request
+        render :text => 'Not Found', :status => '404'
+        return false
+      end
       authenticate_or_request_with_http_basic do |username, password|
         username == Rails.configuration.dj_mon.username &&
         password == Rails.configuration.dj_mon.password
@@ -66,15 +66,10 @@ module DjMon
       response.headers['DJ-Mon-Version'] = DjMon::VERSION
     end
 
-    def restrict_requests
+    def invalid_request
       valid_ips = Rails.configuration.dj_mon.whitelist_ips
-      return true if valid_ips.blank?
-      valid = valid_ips.select {|req| req.include?(request.remote_ip) }
-      if valid.empty?
-        redirect_to access_denied_path
-        return false
-      end
-      true
+      return false if valid_ips.blank?
+      valid_ips.select {|req| request.remote_ip.include?(req) }.empty?
     end
 
   end
