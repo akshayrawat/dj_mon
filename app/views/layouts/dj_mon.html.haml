@@ -11,9 +11,9 @@
         .navbar-inner
           .container
             .pull-left
-              = link_to "DJ Mon", dj_reports_url, class: "brand"
+              = link_to "DJ Mon", dj_reports_url, :class => "brand"
             .pull-right
-              = link_to "Settings", "#dj_settings_template", rel: 'modal', 'data-content'=> "#{DjMon::DjReport.settings.to_json}", id: 'settings', class: 'btn btn-primary btn-mini'
+              = link_to "Settings", "#dj_settings_template", :rel => 'modal', 'data-content'=> "#{DjMon::DjReport.settings.to_json}", :id => 'settings', :class => 'btn btn-primary btn-mini'
 
             .pull-right
               #dj-counts-view
@@ -44,7 +44,7 @@
     %script#dj_settings_template{ :type=> "text/x-handlebars-template" }
       .modal.hide
         .modal-header
-          %button{ type: "button", class: "close", 'data-dismiss' => "modal" }
+          %button{ :type => "button", :class => "close", 'data-dismiss' => "modal" }
             ×
           %h3
             Settings
@@ -92,5 +92,5 @@
                 <code>{{content.delay_jobs}}</code>
 
         .modal-footer
-          = link_to "Close", '#', class: 'btn btn-primary', 'data-dismiss'=> 'modal'
+          = link_to "Close", '#', :class => 'btn btn-primary', 'data-dismiss'=> 'modal'
 

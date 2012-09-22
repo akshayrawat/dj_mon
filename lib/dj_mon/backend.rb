@@ -14,8 +14,9 @@ module DjMon
           raise "DjMon has no backend for '#{delayed_job_backend}'"
         end
       end
-
-      delegate *BACKEND_METHODS, :to => :used_backend
+      
+      BACKEND_METHODS << {:to => :used_backend}
+      delegate *BACKEND_METHODS
     end
   end
 end
