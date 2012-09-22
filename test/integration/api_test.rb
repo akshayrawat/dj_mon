@@ -33,6 +33,16 @@ class ApiTest < ActionDispatch::IntegrationTest
       unauthorized_delete "/dj_mon/dj_reports/100/", format: 'json'
       assert_equal 401, status
     end
+
+    %w(all failed active queued dj_counts settings).each do |protected_get|
+      should "not allow restricted_ip's GET to /dj_reports/#{protected_get}" do
+        DjMon::Engine.config.dj_mon.whitelist = ["111.111.111"]
+        authorized_get "/dj_mon/dj_reports/#{protected_get}", format: 'json'
+        assert_equal 404, status
+        DjMon::Engine.config.dj_mon.whitelist = []
+      end
+    end
+
   end
 
   context "GET /dj_counts" do

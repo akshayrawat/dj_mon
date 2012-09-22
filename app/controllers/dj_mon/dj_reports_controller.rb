@@ -67,7 +67,7 @@ module DjMon
     end
 
     def invalid_request
-      valid_ips = Rails.configuration.dj_mon.whitelist_ips
+      valid_ips = Rails.configuration.dj_mon.whitelist
       return false if valid_ips.blank?
       valid_ips.select {|req| request.remote_ip.include?(req) }.empty?
     end
