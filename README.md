@@ -44,6 +44,12 @@ This uses http basic auth for authentication. Set the credentials in an initiali
     
 If the credentials are not set, then the username and password are assumed to be the above mentioned.
 
+If you need to whitelist to a certain ip address, or subnet, add them in an array:
+
+    YourApp::Application.config.dj_mon.whitelist = ["127.0."]
+
+Now only requests starting with 127.0. will be allowed. The default is to allow anyone. 
+
 Now visit `http://localhost:3000/dj_mon` and profit!
 
 ## iPhone App
