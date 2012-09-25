@@ -2,9 +2,11 @@
 %html
   %head{:lang => "en"}
     %meta{:name => "apple-itunes-app", :content => "app-id=552732872"}
-    = stylesheet_link_tag "dj_mon/dj_mon", :media => "screen, projection"
+    %script
+      var dj_counts_dj_reports_url = "#{dj_counts_dj_reports_url}"
     = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
     = javascript_include_tag "dj_mon/dj_mon"
+    = stylesheet_link_tag "dj_mon/dj_mon", :media => "screen, projection"
     = yield :head
 
   %body
@@ -15,7 +17,7 @@
             .pull-left
               = link_to "DJ Mon", dj_reports_url, :class => "brand"
             .pull-right
-              = link_to "Settings", "#dj_settings_template", :rel => 'modal', 'data-content'=> "#{DjMon::DjReport.settings.to_json}", :id => 'settings', :class => 'btn btn-primary btn-mini'
+              = link_to "Settings", "#dj_settings_template", :rel => 'modal', "data-content" => DjMon::DjReport.settings.to_json, :id => "settings", :class => "btn btn-primary btn-mini"
 
             .pull-right
               #dj-counts-view
@@ -27,9 +29,6 @@
 
     .container
       = yield
-
-    %script
-      var dj_counts_dj_reports_url = "#{dj_counts_dj_reports_url}"
 
     %script#dj_counts_template{ :type=> "text/x-handlebars-template" }
       %span.badge.badge-warning
