@@ -1,5 +1,9 @@
 module DjMon
   module IosAppHelper
+    def open_in_ios_app_link *options
+      link_to options.shift, open_in_ios_app_url, *options
+    end
+
     def open_in_ios_app_url
       params = {}
       params[:user] = Rails.configuration.dj_mon.username
