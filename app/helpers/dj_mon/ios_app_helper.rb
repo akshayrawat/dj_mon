@@ -1,5 +1,9 @@
 module DjMon
   module IosAppHelper
+    def ios?
+      !!request.env["HTTP_USER_AGENT"][/AppleWebKit(.*)Mobile/]
+    end
+
     def open_in_ios_app_link *options
       link_to options.shift, open_in_ios_app_url, *options
     end
