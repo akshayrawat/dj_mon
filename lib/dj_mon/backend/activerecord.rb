@@ -7,15 +7,15 @@ module DjMon
         end
 
         def failed
-          Delayed::Job.where('delayed_jobs.failed_at IS NOT NULL')
+          Delayed::Job.where('failed_at IS NOT NULL')
         end
 
         def active
-          Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NOT NULL')
+          Delayed::Job.where('failed_at IS NULL AND locked_by IS NOT NULL')
         end
 
         def queued
-          Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NULL')
+          Delayed::Job.where('failed_at IS NULL AND locked_by IS NULL')
         end
 
         def destroy id
