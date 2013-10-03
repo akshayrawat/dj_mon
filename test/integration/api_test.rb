@@ -124,6 +124,22 @@ class ApiTest < ActionDispatch::IntegrationTest
     end
   end
 
+  context "GET /all with malformed job" do
+    setup do
+      build_failed_jobs({ :count=> 1, :priority=> 1, :queue=> "queue_mailer_1" })
+      build_queued_jobs(:count=> 1, :priority=> 2, :queue=> "queue_mailer_2")
+      build_active_jobs({ :count=> 1, :priority=> 3, :queue=> 'queue_mailer_3' })
+      build_syntax_error_jobs({ :count=> 1, :priority=> 3, :queue=> 'queue_mailer_4' })
+    end
+
+    should "replace the payload if payload is malformed" do
+      authorized_get '/dj_mon/dj_reports/all', :format=> 'json'
+      assert_equal 4, json_response.size
+      assert_job_in_queue('queue_mailer_4', { :failed=> false, :syntax_error=> true, :priority=> 3, :attempts=> 0, :queue=> 'queue_mailer_4' })
+    end
+  end
+
+
   context "DELETE /:id" do
     should "delete the job specified by the :id" do
       job = build_failed_jobs.first
@@ -171,6 +187,17 @@ class ApiTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def build_syntax_error_jobs(options = {})
+    options = { :count=> 1, :priority=> 1, :queue=> 'queue_mailer' }.merge(options)
+    malformed_yaml = "--- !ruby/object:TestJob {what:'no\n"
+    options[:count].times.map do
+      job = Delayed::Job.enqueue(TestJob.new, :priority=> options[:priority], :queue=> options[:queue])
+      job.handler = malformed_yaml
+      job.update_attributes({:locked_at=> Time.current, :locked_by=> 'some-worker'})
+      job
+    end
+  end
+
   def worker
     Delayed::Worker.new
   end
@@ -186,6 +213,14 @@ class ApiTest < ActionDispatch::IntegrationTest
       assert actual['last_error'].include?("this one fails")
       assert actual['last_error_summary'].include?("this one fails")
       assert_not_nil DateTime.strptime(actual['failed_at'], DjMon::DjReport::TIME_FORMAT)
+    elsif expected[:syntax_error]
+      # Gross hack to make this assertion compat with Ruby 1.8.7 and 1.9.3
+      # - 1.8.7 throws DelayedJob::DeserializationError
+      # - 1.9.3 throws Psych::SyntaxError
+      assert_match /SyntaxError|DeserializationError/, actual['payload'].strip
+      assert actual['failed_at'].empty?
+      assert_nil actual['last_error']
+      assert actual['last_error_summary'].empty?
     else
       assert_equal "--- !ruby/object:TestJob {}", actual['payload'].strip
       assert actual['failed_at'].empty?

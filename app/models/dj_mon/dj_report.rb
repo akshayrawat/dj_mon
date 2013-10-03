@@ -26,6 +26,8 @@ module DjMon
 
     def payload job
       job.payload_object.respond_to?(:object) ? job.payload_object.object.to_yaml : job.payload_object.to_yaml
+    rescue Delayed::DeserializationError, SyntaxError, StandardError
+      "#{$!.class}: #{$!.message}"
     end
 
     class << self
