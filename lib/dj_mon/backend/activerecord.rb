@@ -1,21 +1,39 @@
 module DjMon
   module Backend
     module ActiveRecord
+      module LimitedProxy
+        class << self
+          def method_missing(method, *args, &block)
+            scope = ::DjMon::Backend::ActiveRecord.send(method, *args, &block)
+            limit = Rails.configuration.dj_mon.results_limit
+            limit.present? ? scope.order('id DESC').limit(limit) : scope.order('id DESC')
+          end
+
+          def respond_to?(method)
+            super || ::DjMon::Backend::ActiveRecord.respond_to?(method)
+          end
+        end
+      end
+
       class << self
+        def limited
+          LimitedProxy
+        end
+
         def all
-          Delayed::Job.all
+          Delayed::Job.scoped
         end
 
         def failed
-          Delayed::Job.where('delayed_jobs.failed_at IS NOT NULL')
+          Delayed::Job.where('failed_at IS NOT NULL')
         end
 
         def active
-          Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NOT NULL')
+          Delayed::Job.where('failed_at IS NULL AND locked_by IS NOT NULL')
         end
 
         def queued
-          Delayed::Job.where('delayed_jobs.failed_at IS NULL AND delayed_jobs.locked_by IS NULL')
+          Delayed::Job.where('failed_at IS NULL AND locked_by IS NULL')
         end
 
         def destroy id

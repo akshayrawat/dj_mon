@@ -1,6 +1,6 @@
 module DjMon
   module Backend
-    BACKEND_METHODS = [:all, :failed, :active, :queued, :destroy, :retry]
+    BACKEND_METHODS = [:all, :failed, :active, :queued, :destroy, :retry, :limited]
 
     class << self
       def used_backend
@@ -14,7 +14,7 @@ module DjMon
           raise "DjMon has no backend for '#{delayed_job_backend}'"
         end
       end
-      
+
       BACKEND_METHODS << {:to => :used_backend}
       delegate *BACKEND_METHODS
     end

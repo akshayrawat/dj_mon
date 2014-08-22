@@ -2,6 +2,10 @@ module DjMon
   module Backend
     module Mongoid
       class << self
+        def limited
+          self #TODO: Implement me! See activerecord.rb
+        end
+
         def all
           Delayed::Job.all
         end

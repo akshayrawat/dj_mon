@@ -9,7 +9,7 @@ module DjMon
     end
 
     def as_json(options={})
-      { 
+      {
         :id => delayed_job.id,
         :payload => payload(delayed_job),
         :priority => delayed_job.priority,
@@ -34,19 +34,19 @@ module DjMon
       end
 
       def all_reports
-        reports_for DjMon::Backend.all
+        reports_for DjMon::Backend.limited.all
       end
 
       def failed_reports
-        reports_for DjMon::Backend.failed
+        reports_for DjMon::Backend.limited.failed
       end
 
       def active_reports
-        reports_for DjMon::Backend.active
+        reports_for DjMon::Backend.limited.active
       end
 
       def queued_reports
-        reports_for DjMon::Backend.queued
+        reports_for DjMon::Backend.limited.queued
       end
 
       def dj_counts
