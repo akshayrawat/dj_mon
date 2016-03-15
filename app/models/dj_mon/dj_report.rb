@@ -10,7 +10,7 @@ module DjMon
 
     def as_json(options={})
       {
-        :id => delayed_job.id,
+        :id => delayed_job.id.to_s,
         :payload => payload(delayed_job),
         :priority => delayed_job.priority,
         :attempts => delayed_job.attempts,
