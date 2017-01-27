@@ -1,0 +1,6 @@
+source "http://rubygems.org"
+
+# Specify your gem's dependencies in dj_mon.gemspec
+gemspec :path => '../'
+
+gem 'mongoid', '~> 2.4.0'

@@ -19,22 +19,13 @@ namespace :test do
     t.libs = [ "test/dummy_active_record" ]
   end
 
-  if RUBY_VERSION =~ /^1\.9/
-
-    desc "Run all tests for the Mongoid backend"
-    Rake::TestTask.new(:mongoid) do |t|
-      t.pattern = 'test/**/*_test.rb'
-      t.libs = [ "test/dummy_mongoid" ]
-    end
-    desc "Runs all tests"
-    task "all"=> [ :active_record, :mongoid ]
-
-  else
-    # delayed_job_mongoid needs ~> mongoid 3.0 which needs ruby 1.9.
-    desc "Runs active_record tests"
-    task "all"=> [ :active_record ]
-
+  desc "Run all tests for the Mongoid backend"
+  Rake::TestTask.new(:mongoid) do |t|
+    t.pattern = 'test/**/*_test.rb'
+    t.libs = [ "test/dummy_mongoid" ]
   end
+  desc "Runs all tests"
+  task "all"=> [ :active_record, :mongoid ]
 
   desc "Prepare environment for tests"
   task :prepare do
