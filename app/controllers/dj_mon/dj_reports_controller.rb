@@ -52,6 +52,8 @@ module DjMon
     protected
 
     def authenticate
+      raise MissingAuthInformationError if Rails.configuration.dj_mon.username.nil? || Rails.configuration.dj_mon.password.nil?
+
       authenticate_or_request_with_http_basic do |username, password|
         username == Rails.configuration.dj_mon.username &&
         password == Rails.configuration.dj_mon.password
