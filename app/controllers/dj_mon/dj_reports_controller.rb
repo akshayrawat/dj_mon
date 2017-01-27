@@ -1,5 +1,6 @@
 module DjMon
   class DjReportsController < ActionController::Base
+    include AuthStrategy
     respond_to :json, :html
     layout 'dj_mon'
 
@@ -52,10 +53,15 @@ module DjMon
     protected
 
     def authenticate
-      authenticate_or_request_with_http_basic do |username, password|
-        username == Rails.configuration.dj_mon.username &&
-        password == Rails.configuration.dj_mon.password
+      if api_request?
+        Rails.configuration.dj_mon.api_auth_strategy.new.process(self)
+      else
+        Rails.configuration.dj_mon.web_auth_strategy.new.process(self)
       end
+    end
+
+    def api_request?
+      !!(request.env["HTTP_USER_AGENT"] =~ /DJ.*Mon.*Darwin.*/)
     end
 
     def set_api_version
