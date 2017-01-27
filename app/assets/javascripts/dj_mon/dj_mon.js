@@ -30,7 +30,7 @@ $(function(){
 
   $('a[rel=modal]').live('click', function(){
     var template = $($(this).attr('href')).html();
-    var output = Mustache.render(template, { content: $(this).data('content') });
+    var output = Mustache.render(template, $(this).data());
     $(output).appendTo($('body')).show();
   });
 

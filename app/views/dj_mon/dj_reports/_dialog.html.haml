@@ -1,0 +1,11 @@
+%script{ :id => "#{template_name}_template", :type=> "text/x-handlebars-template" }
+  .modal.hide
+    .modal-header
+      %button{ :type => "button", :class => "close", 'data-dismiss' => "modal" }
+        ×
+      %h3
+        = headline
+    .modal-body
+      = content
+    .modal-footer
+      = link_to "Close", '#', :class => 'btn btn-primary', 'data-dismiss' => 'modal'

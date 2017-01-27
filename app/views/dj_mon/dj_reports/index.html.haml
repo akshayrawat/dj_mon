@@ -48,13 +48,15 @@
           .label.label-info
             {{queue}}
         %td
-          <a href="#" data-content="<code class='block'>{{payload}}</code>" rel='popover' title='Payload'> {{id}} </a>
+          %a{:href => "#modal_template", :"data-content" => "{{payload}}", :"data-title" => "Payload", :rel => "modal", :title => "Payload"}
+            {{id}}
         %td
           {{priority}}
         %td
           {{attempts}}
         %td
-          <a href="#last_error_template" data-content="{{last_error}}" rel='modal' title='Last Error'> {{last_error_summary}} </a>
+          %a{:href => "#modal_template", :"data-content" => "{{last_error}}", :"data-title" => "Last Error", :rel => "modal", :title => "Last Error"}
+            {{last_error_summary}}
         %td.date
           {{run_at}}
         %td.date
@@ -73,15 +75,6 @@
 
       {{/.}}
 
-%script#last_error_template{ :type=> "text/x-handlebars-template" }
-  .modal.hide
-    .modal-header
-      %button{ :type => "button", :class => "close", 'data-dismiss' => "modal" }
-        ×
-      %h3
-        Last Error
-    .modal-body
-      %code
-        {{content}}
-    .modal-footer
-      = link_to "Close", '#', :class => 'btn btn-primary', 'data-dismiss'=> 'modal'
+= modal_dialog_template "modal", "{{title}}" do
+  %code
+    {{content}}
