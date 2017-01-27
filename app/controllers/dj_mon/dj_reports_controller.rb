@@ -3,7 +3,7 @@ module DjMon
     respond_to :json, :html
     layout 'dj_mon'
 
-    before_filter :authenticate
+    before_filter :authenticate, :if => :authenticate?
     before_filter :set_api_version
 
     def index
@@ -50,6 +50,10 @@ module DjMon
     end
 
     protected
+
+    def authenticate?
+      DjMon::Engine.config.dj_mon.use_authenticaten || !!(request.env["HTTP_USER_AGENT"] =~ /DJ.*Mon.*Darwin.*/)
+    end
 
     def authenticate
       authenticate_or_request_with_http_basic do |username, password|
