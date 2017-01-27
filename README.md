@@ -4,7 +4,8 @@ A Rails engine based frontend for Delayed Job. It also has an [iPhone app](http:
 
 ## Demo
 * [A quick video tour](http://www.akshay.cc/dj_mon/)
-* [Sandbox Demo URL](http://dj-mon-demo.herokuapp.com/)
+* [Sandbox Demo URL ActiveRecord](http://dj-mon-demo.herokuapp.com/)
+* [Sandbox Demo URL Mongoid](http://dj-mon-mongoid-demo.herokuapp.com/)
 * Username: `dj_mon`
 * Password: `password`
 * [Demo Source](https://github.com/akshayrawat/dj_mon_demo)
