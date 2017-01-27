@@ -3,6 +3,8 @@
     Delayed Jobs
   .pull-right
     = link_to "Get DJ Mon for iPhone", "http://itunes.apple.com/app/dj-mon/id552732872", :target => '_blank', :class => 'btn btn-mini'
+    - if ios? || true
+      = open_in_ios_app_link "Open in DJ Mon for iPhone", :class => 'btn btn-mini'
 
 %ul.nav.nav-tabs
   %li.active
